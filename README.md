@@ -13,15 +13,11 @@ Use the following command: `npm i mysql2@2.2.5`.
 
 ## Usage
 
-A user can create a team HTML file by following the prompts and answering the questions about their team. 
+A user can create and update an employee database by following the prompts and answering the questions about their team. 
 
-The following is a video of the application. [Click here for link to video](https://drive.google.com/file/d/1Dbo1jfounh6jwoNB0eIjZn2jfHIcLIi1/view)
+The following is a video of the application. [Click here for link to video](https://drive.google.com/file/d/1wVoEW6QsdpW_zXdfhPfUSrRQk2ZHBsC6/view)
 
-![Video of application](/assets/demo_video.gif)
-
-The following is a screenshot of the html created in the video
-
-![screenshot of html from video](/assets/Screenshot%202023-01-08%20230344.png)
+![Video of application](/assets/SQL-Employee-Tracker-Demo.gif)
 
 ## License
 
