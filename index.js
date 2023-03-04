@@ -64,7 +64,8 @@ function viewAllDepartments(){
 
 // View All Roles function
 function viewAllRoles(){
-    db.query('SELECT * FROM role', function (err, results){
+    const sql = 'SELECT * FROM role'
+    db.query(sql, (err, results) => {
         console.table(results);
         start();
     });
@@ -72,7 +73,8 @@ function viewAllRoles(){
 
 // View All Employees function
 function viewAllEmployees(){
-    db.query('SELECT employee.id, employee.first_name, employee.last_name, role.title AS Job_Title, department.name AS Department, role.salary AS Salary, employee.manager_id', function (err, results){
+    const sql = 'SELECT employee.id, employee.first_name, employee.last_name, role.title AS Title, department.name AS Department, role.salary AS Salary, CONCAT(manager.first_name, " " ,manager.last_name) AS Manager FROM employee INNER JOIN role on role.id = role_id INNER JOIN department on department.id = role.department_id left join employee manager on employee.manager_id = manager.id;'
+    db.query(sql, (err, results) => {
         console.table(results);
         start();
     });
@@ -89,8 +91,10 @@ function addADepartment(){
     },
   ])
   .then((data) => {
-    db.query('INSERT INTO department (name) VALUES (?)', {name: data.name}, function (err, results){
-        console.table(results);
+    const sql = 'INSERT INTO department SET ?'
+    const newDepartment = {name: data.name}
+    db.query(sql, newDepartment, (err, results) => {
+        console.log(`successfully added department ${data.name}`)
         start();
     })
  
