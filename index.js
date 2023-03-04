@@ -1,7 +1,7 @@
 const inquirer = require("inquirer");
 const db = require("./config/connection");
 
-// start application
+// start application to run the choices
 function start() {
   inquirer
     .prompt({
