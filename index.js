@@ -1,5 +1,5 @@
 const inquirer = require("inquirer");
-const connection = require("./config/connection");
+const db = require("./config/connection");
 
 // start application
 function start() {
@@ -20,7 +20,7 @@ function start() {
       ],
     })
     .then((data) => {
-      switch (data) {
+      switch (data.action) {
         case "View All Departments":
           viewAllDepartments();
           break;
@@ -33,18 +33,18 @@ function start() {
         case "Add a Department":
           addADepartment();
           break;
-        case "Add a Role":
-          addARole();
-          break;
-        case "Add an Employee":
-          addAnEmployee();
-          break;
-        case "Update Employee Role":
-          updateEmployeeRole();
-          break;
-        case "Quit":
-          quit();
-          break;
+        // case "Add a Role":
+        //   addARole();
+        //   break;
+        // case "Add an Employee":
+        //   addAnEmployee();
+        //   break;
+        // case "Update Employee Role":
+        //   updateEmployeeRole();
+        //   break;
+        // case "Quit":
+        //   quit();
+        //   break;
         default:
           console.log("Invalid response");
           start();
@@ -55,30 +55,58 @@ function start() {
 
 // View All Departments function
 function viewAllDepartments(){
-    connection.query('SELECT * FROM department', function (err, res){});
+    const sql = 'SELECT * FROM department'
+    db.query(sql, (err, results) => {
+        console.table(results);
+        start();
+    });
 };
 
 // View All Roles function
 function viewAllRoles(){
-    connection.query('SELECT * FROM role');
+    db.query('SELECT * FROM role', function (err, results){
+        console.table(results);
+        start();
+    });
 };
 
 // View All Employees function
 function viewAllEmployees(){
-    connection.query('SELECT * FROM employee');
+    db.query('SELECT employee.id, employee.first_name, employee.last_name, role.title AS Job_Title, department.name AS Department, role.salary AS Salary, employee.manager_id', function (err, results){
+        console.table(results);
+        start();
+    });
 };
 
 // Add a Department function
-function addADepartment();
+function addADepartment(){
+    inquirer
+  .prompt([
+    {
+      type: 'input',
+      name: 'name',
+      message: "Please enter a name for new department",
+    },
+  ])
+  .then((data) => {
+    db.query('INSERT INTO department (name) VALUES (?)', {name: data.name}, function (err, results){
+        console.table(results);
+        start();
+    })
+ 
+  });
+};
 
-// Add a Role function
-function addARole();
+// // Add a Role function
+// function addARole();
 
-// Add an Employee function
-function addAnEmployee();
+// // Add an Employee function
+// function addAnEmployee();
 
-// Update Employee Role function
-function updateEmployeeRole();
+// // Update Employee Role function
+// function updateEmployeeRole();
 
-// Quit application function
-function quit();
+// // Quit application function
+// function quit();
+
+start();
